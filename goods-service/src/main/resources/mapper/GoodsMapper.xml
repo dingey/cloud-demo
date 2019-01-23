@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.d.goods.mapper.GoodsMapper">
+	<sql id="Base_Column_List" >
+		`id`,`store_id`,`goods_cate_id`,`name`,`desc`,`original_price`,`sale_price`,`qty`,`cover`,`carousel`,`detail`,`shelf_status`,`recommend_status`,`start_time`,`end_time`,`postage_type`,`create_time`,`create_by`,`update_time`,`update_by`,`del_flag`
+	</sql>
+</mapper>

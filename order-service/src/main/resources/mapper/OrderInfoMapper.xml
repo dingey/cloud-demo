@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.d.order.mapper.OrderInfoMapper">
+	<sql id="Base_Column_List" >
+		`id`,`user_id`,`user_addr_id`,`split_order`,`parent_id`,`coupon_id`,`title`,`desc`,`total_amount`,`discount_amount`,`postage_amount`,`pay_amount`,`express_no`,`status`,`type`,`name`,`phone`,`province`,`city`,`region`,`address`,`create_time`,`create_by`,`update_time`,`update_by`,`del_flag`
+	</sql>
+</mapper>

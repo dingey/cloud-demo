@@ -1,0 +1,54 @@
+server:
+  port: 8080
+
+host: localhost:${server.port}
+
+spring:
+  profiles:
+    active: dev
+
+  cloud:
+    gateway:
+      filter:
+        remove-non-proxy-headers:
+          headers:
+          - dummy
+      routes:
+        - id:  user
+        # 重点！/info必须使用http进行转发，lb代表从注册中心获取服务
+          uri: lb://user-service
+          predicates:
+          # 重点！转发该路径！,/userapi/**,
+          - Path=/user/**
+          # http://localhost:6601/user/user/users/2, 必须加上StripPrefix=1，否则访问服务时会带上userapi
+          #而不是我们期望的去掉userapi，只保留**部分
+          filters:
+          - StripPrefix=1
+        - id:  user-api2
+          uri: lb://user-service
+          predicates:
+          - Path=/user-api2/**
+          #访问 http://localhost:8080/user-api2/member/2 转发到 lb://member-service/member/2
+          filters:
+          - StripPrefix=1
+
+eureka:
+   client:
+      serviceUrl:
+        defaultZone: http://localhost:8761/eureka/
+feign:
+  hystrix:
+    enabled: true
+
+zuul:
+  ignoredServices: '*'
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 20000
+
+  routes:
+    member-service:
+        path: /user/**
+        serviceId: user-service
+        stripPrefix: false
+        sensitiveHeaders:
