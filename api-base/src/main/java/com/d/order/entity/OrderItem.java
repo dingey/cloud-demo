@@ -10,9 +10,9 @@ import com.d.base.BaseEntity;
 public class OrderItem extends BaseEntity<OrderItem> {
     private static final long serialVersionUID = 1085519195673722880L;
     @ApiModelProperty("用户id")
-    private Integer userId;
+    private Long userId;
     @ApiModelProperty("SKUid")
-    private Integer goodsSkuId;
+    private Long goodsSkuId;
     @ApiModelProperty("订单父id")
     private Long parentOrderId;
     @ApiModelProperty("订单id")
@@ -24,5 +24,5 @@ public class OrderItem extends BaseEntity<OrderItem> {
     @ApiModelProperty("总金额：分")
     private Integer totalAmount;
     private Integer discountAmount;
-    private Integer couponId;
+    private Long couponId;
 }

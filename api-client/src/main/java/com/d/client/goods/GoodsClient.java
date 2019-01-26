@@ -12,4 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface GoodsClient {
     @GetMapping("/goods/{id}")
     Goods get(@PathVariable("id") Long id);
+
+    @GetMapping("/goods/sku/{id}")
+    Goods getBySkuId(@PathVariable("id") Long id);
 }

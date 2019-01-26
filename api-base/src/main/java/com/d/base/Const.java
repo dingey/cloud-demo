@@ -23,6 +23,7 @@ public class Const {
 
     //订阅频道
     public static final String TOPIC_ORDER_CREATE = "topic.order.create";//订单创建
+    public static final String TOPIC_ORDER_CHECK = "topic.order.check";//订单校验，扣库存
     public static final String TOPIC_ORDER_CANCEL = "topic.order.cancel";//订单取消
     public static final String TOPIC_ORDER_CLOSE = "topic.order.close";//订单关闭
     public static final String TOPIC_ORDER_FAIL = "topic.order.fail";//下单失败，库存不足等需回退

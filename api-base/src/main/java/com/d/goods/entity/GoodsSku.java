@@ -14,9 +14,9 @@ import com.d.base.BaseEntity;
 public class GoodsSku extends BaseEntity<GoodsSku> {
 	private static final long serialVersionUID = 1085522620503293952L;
     @ApiModelProperty("店铺id")
-    private Integer storeId;
+    private Long storeId;
     @ApiModelProperty("商品id")
-    private Integer goodsId;
+    private Long goodsId;
     @ApiModelProperty("商品编码")
     private String goodsCode;
     @ApiModelProperty("商品条形码")
