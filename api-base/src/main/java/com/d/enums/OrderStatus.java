@@ -13,7 +13,8 @@ public enum OrderStatus {
     COMPLETED(6, "已完成"),
     CANCELLED(7, "取消"),
     REFUNDED(8, "已退款"),
-    INVENTORY_SHORTAGE(9, "库存不足");
+    INVENTORY_SHORTAGE(9, "库存不足"),
+    CLOSED(10, "已关闭");
 
     private int code;
     private String name;
