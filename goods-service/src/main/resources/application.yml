@@ -36,6 +36,10 @@ spring:
       password: ${rq_username:admin}
       publisher-confirms: true
       virtual-host: /
+   redis:
+      host: ${r_host:127.0.0.1}
+      password: ${r_password:123456}
+      port: 6379
 eureka:
   instance:
     leaseRenewalIntervalInSeconds: 10

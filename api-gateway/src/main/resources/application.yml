@@ -6,6 +6,10 @@ host: localhost:${server.port}
 spring:
   profiles:
     active: dev
+  security:
+    user:
+      name: admin
+      password: admin
 
   cloud:
     gateway:
@@ -35,7 +39,7 @@ spring:
 eureka:
    client:
       serviceUrl:
-        defaultZone: http://localhost:8761/eureka/
+        defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.host:localhost}:8761/eureka/
 feign:
   hystrix:
     enabled: true
