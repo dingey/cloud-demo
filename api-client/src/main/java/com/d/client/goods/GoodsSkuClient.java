@@ -2,20 +2,19 @@ package com.d.client.goods;
 
 import com.d.goods.entity.GoodsSku;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @auther d
  */
-@FeignClient(value = "SERVICE-GOODS")
+@FeignClient(value = "GOODS-SERVICE")
 public interface GoodsSkuClient {
-	@GetMapping("/goodsSku/{id}")
-	GoodsSku get(Long id);
+    @RequestMapping(path = "/goodsSku/{id}", method = RequestMethod.GET)
+    GoodsSku get(@PathVariable("id") Long id);
 
-	@PostMapping("/goodsSku/reduce")
-	Integer reduceInventory(Long id, Integer qty);
-	
-	@PostMapping("/goodsSku/increase")
-	Integer increaseInventory(Long id, Integer qty);
+    @RequestMapping(path = "/goodsSku/reduce", method = RequestMethod.POST)
+    Integer reduceInventory(@RequestParam("id") Long id, @RequestParam("qty") Integer qty);
+
+    @RequestMapping(path = "/goodsSku/increase", method = RequestMethod.POST)
+    Integer increaseInventory(@RequestParam("id") Long id, @RequestParam("qty") Integer qty);
 }
