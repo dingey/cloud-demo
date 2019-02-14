@@ -10,7 +10,7 @@ import com.d.goods.entity.GoodsSku;
  * @date 2019-01-16 21:02
  */
 public interface GoodsSkuService extends BaseService<GoodsSku> {
-    Long reduceInventory(Long skuId, Integer qty);
+    Long reduceInventory(Long skuId, Integer qty, Long orderId);
 
-    Long increaseInventory(Long skuId, Integer qty);
+    Long increaseInventory(Long skuId, Integer qty, Long orderId);
 }

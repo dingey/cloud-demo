@@ -20,10 +20,8 @@ import com.d.order.dto.OrderDTO;
 import com.d.order.entity.OrderInfo;
 import com.d.order.entity.OrderItem;
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
-import java.util.stream.Collectors;
 
 /**
  * 订单信息service
@@ -38,14 +36,16 @@ public class OrderInfoServiceImpl extends BaseServiceImpl<OrderInfoMapper, Order
     private final GoodsClient goodsClient;
     private final GoodsSkuClient goodsSkuClient;
     private final AmqpTemplate rabbit;
+    private final StringRedisTemplate srt;
 
-    public OrderInfoServiceImpl(IdService idService, OrderItemService orderItemService, GoodsClient goodsClient, GoodsSkuClient goodsSkuClient, AmqpTemplate rabbit) {
+    public OrderInfoServiceImpl(IdService idService, OrderItemService orderItemService, GoodsClient goodsClient, GoodsSkuClient goodsSkuClient, AmqpTemplate rabbit, StringRedisTemplate srt) {
         super();
         this.idService = idService;
         this.orderItemService = orderItemService;
         this.goodsClient = goodsClient;
         this.goodsSkuClient = goodsSkuClient;
         this.rabbit = rabbit;
+        this.srt = srt;
     }
 
     @Override
@@ -56,22 +56,18 @@ public class OrderInfoServiceImpl extends BaseServiceImpl<OrderInfoMapper, Order
         Integer totalAmount = 0;
         Integer postageAmount = 0;
         Integer discountAmount = 0;
-        boolean fail = false;
-        HashSet<Long> tmp = null;
+        if (dto.getOrderId() == null) {
+            dto.setOrderId(idService.nextId());
+        }
         for (OrderDTO.OrderItemDTO itemDTO : dto.getItem()) {
             Goods goods = goodsClient.getBySkuId(itemDTO.getSkuId());
             GoodsSku sku = goodsSkuClient.get(itemDTO.getSkuId());
             Assert.buyCheck(goods);
+            if (sku.getQty() < itemDTO.getQty()) {
+                throw new RuntimeException("库存不足");
+            }
             if (itemDTO.getCouponId() != null && itemDTO.getCouponId() > 0) {
                 // TODO 优惠券校验
-            }
-            Integer reduceInventory = goodsSkuClient.reduceInventory(itemDTO.getSkuId(), itemDTO.getQty());
-            if (reduceInventory < 1) {
-                fail = true;
-                if (tmp == null) {
-                    tmp = new HashSet<>();
-                }
-                tmp.add(itemDTO.getSkuId());
             }
             OrderItem orderItem = new OrderItem();
             orderItem.setId(idService.nextId());
@@ -91,19 +87,15 @@ public class OrderInfoServiceImpl extends BaseServiceImpl<OrderInfoMapper, Order
         }
         OrderInfo orderInfo = new OrderInfo();
         orderInfo.setNewRecord(true);
-        orderInfo.setId(dto.getOrderId() == null ? idService.nextId() : dto.getOrderId());
+        orderInfo.setId(dto.getOrderId());
         orderInfo.setUserId(dto.getUserId());
         orderInfo.setDiscountAmount(discountAmount);
         orderInfo.setPostageAmount(postageAmount);
         orderInfo.setTotalAmount(totalAmount);
-        orderInfo.setStatus(fail ? OrderStatus.CLOSED.getCode() : OrderStatus.PENDING_PAYMENT.getCode());
+        orderInfo.setStatus(OrderStatus.PENDING_CHECK.getCode());
         int res = this.save(orderInfo);
-        if (res > 0 && !fail) {
+        if (res > 0) {
             rabbit.convertAndSend(Const.TOPIC_ORDER_CHECK, JsonUtil.toJson(dto));
-        } else {// 回退库存
-            for (OrderDTO.OrderItemDTO it : dto.getItem()) {
-                if (!tmp.contains(it.getSkuId())) goodsSkuClient.increaseInventory(it.getSkuId(), it.getQty());
-            }
         }
         return res;
     }
