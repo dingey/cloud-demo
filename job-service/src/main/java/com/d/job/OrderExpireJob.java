@@ -30,6 +30,7 @@ public class OrderExpireJob implements InterruptableJob {
             if (!run)
                 return;
             orderClient.expire(Long.valueOf(s));
+            srt.opsForZSet().remove(Const.CACHE_KEY_ORDER_EXPIRE, s);
         }
     }
 }
