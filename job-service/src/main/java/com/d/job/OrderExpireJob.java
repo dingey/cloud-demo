@@ -25,7 +25,7 @@ public class OrderExpireJob implements InterruptableJob {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        Set<String> range = srt.opsForZSet().range(Const.CACHE_KEY_ORDER_EXPIRE, 0, System.currentTimeMillis() / 1000);
+        Set<String> range = srt.opsForZSet().rangeByScore(Const.CACHE_KEY_ORDER_EXPIRE, 0, System.currentTimeMillis() / 1000);
         for (String s : range) {
             if (!run)
                 return;
