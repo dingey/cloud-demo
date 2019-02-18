@@ -100,4 +100,18 @@ public class OrderInfoServiceImpl extends BaseServiceImpl<OrderInfoMapper, Order
         return res;
     }
 
+    @Override
+    public Integer storageShortage(Long orderId) {
+        return mapper.storageShortage(orderId);
+    }
+
+    @Override
+    public Integer pendingPayment(Long orderId) {
+        return mapper.pendingPayment(orderId);
+    }
+
+    @Override
+    public Integer expireClose(Long orderId) {
+        return mapper.expireClose(orderId);
+    }
 }

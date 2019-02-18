@@ -10,10 +10,7 @@ public class Const {
     public static final String PROFILE_PRE = "pre";//预发布
     public static final String PROFILE_PROD = "prod";//生产
 
-    //微信token 缓存key
-    public static final String MEMBER_TOKEN_KEY = "serve_member_access_token";//微信用户token，公众号token redis key
-    public static final String BUSINESS_TOKEN_KEY = "serve_store_access_token";//商家版小程序token  redis key
-    public static final String PUBLIC_TOKEN_KEY = "serve_access_token";//公众号token  redis key
+    public static final long ORDER_EXPIRE_TIME = 1800;//订单支付限时：秒
 
     //缓存队列名称
     public static final String ORDER_QUEUE = "order.queue";//下单队列
@@ -25,6 +22,8 @@ public class Const {
     public static final String TOPIC_ORDER_SUBMIT = "topic.order.submit";//订单提交
     public static final String TOPIC_ORDER_CREATE = "topic.order.create";//订单创建
     public static final String TOPIC_ORDER_CHECK = "topic.order.check";//订单校验，扣库存
+    public static final String TOPIC_ORDER_CHECK_FAIL = "topic.order.check.fail";//订单校验，扣库存
+    public static final String TOPIC_ORDER_CHECK_SUCCESS = "topic.order.check.fail";//订单校验，扣库存
     public static final String TOPIC_ORDER_CANCEL = "topic.order.cancel";//订单取消
     public static final String TOPIC_ORDER_CLOSE = "topic.order.close";//订单关闭
     public static final String TOPIC_ORDER_FAIL = "topic.order.fail";//下单失败，库存不足等需回退
@@ -34,6 +33,7 @@ public class Const {
     public static final String CACHE_KEY_STOCK = "cache.key.stock";//库存
     public static final String CACHE_KEY_CALL_COUNT = "cache.key.call.count";//调用次数
     public static final String CACHE_KEY_ORDER = "cache.key.order";//订单状态
+    public static final String CACHE_KEY_ORDER_EXPIRE = "cache.key.order.expire";//订单状态
     public static final String CACHE_KEY_AUTH_PATH = "cache.key.auth.path";//订单状态
 
     //CRON表达式

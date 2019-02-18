@@ -49,10 +49,9 @@ public class DeductionInventoryListener {
                 for (OrderDTO.OrderItemDTO it : dto.getItem()) {
                     goodsSkuService.increaseInventory(it.getSkuId(), it.getQty(), dto.getOrderId());
                 }
-                rabbit.convertAndSend(Const.TOPIC_ORDER_CHECK, dto.getOrderId());
-                srt.opsForHash().put(Const.CACHE_KEY_ORDER + dto.getOrderId(), "status", OrderStatus.INVENTORY_SHORTAGE.getCode());
+                rabbit.convertAndSend(Const.TOPIC_ORDER_CHECK_FAIL, dto.getOrderId());
             } else {
-                srt.opsForHash().put(Const.CACHE_KEY_ORDER + dto.getOrderId(), "status", OrderStatus.PENDING_PAYMENT.getCode());
+                rabbit.convertAndSend(Const.TOPIC_ORDER_CHECK_SUCCESS, dto.getOrderId());
             }
             if (log.isDebugEnabled()) {
                 log.debug("【订单扣减库存监听器】【订单信息：{}】【结果：{}】", message, fail ? "失败" : "成功");
