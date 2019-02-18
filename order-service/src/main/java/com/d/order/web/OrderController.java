@@ -6,16 +6,14 @@ import com.d.base.ResultCode;
 import com.d.common.service.IdService;
 import com.d.order.config.OrderConfig;
 import com.d.order.dto.OrderDTO;
+import com.d.order.entity.OrderInfo;
 import com.d.order.service.OrderInfoService;
 import com.d.util.JsonUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @auther d
@@ -62,5 +60,11 @@ public class OrderController {
     @PostMapping(path = "/order/expire")
     public Result<Object> expire(Long orderId) {
         return Result.success(orderInfoService.expireClose(orderId));
+    }
+
+    @ApiOperation("订单查询")
+    @GetMapping(path = "/order/{id}")
+    public OrderInfo get(@PathVariable("id") Long orderId) {
+        return orderInfoService.getCache(orderId);
     }
 }
