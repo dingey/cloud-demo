@@ -5,10 +5,10 @@ public class Const {
     //配置名称
     public static final String DEV = "dev";//开发
     public static final String PRE = "pre";//预发布
-    public static final String PROD = "prod";//生产
+    public static final String PROD = "pro";//生产
     public static final String PROFILE_DEV = "dev";//开发
     public static final String PROFILE_PRE = "pre";//预发布
-    public static final String PROFILE_PROD = "prod";//生产
+    public static final String PROFILE_PROD = "pro";//生产
 
     public static final long ORDER_EXPIRE_TIME = 1800;//订单支付限时：秒
 
