@@ -4,9 +4,11 @@ import com.d.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 @Data
 @ApiModel("商品")
+@Document(indexName = "goods", type = "goods", shards = 1, replicas = 0, refreshInterval = "-1")
 public class Goods extends BaseEntity<Goods> {
 	private static final long serialVersionUID = 1086148322999140352L;
     @ApiModelProperty("店铺id")

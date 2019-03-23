@@ -1,5 +1,5 @@
 server:
-   port: 8765
+   port: 8775
    host: localhost
 spring:
    profiles:
@@ -54,9 +54,14 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+  health:
+    elasticsearch:
+      enabled: false
+    rabbit:
+      enabled: false
 #logback
 logging:
-  path: /logs/ptq-cloud/${spring.application.name}_${server.port}
+  path: /logs/cloud-demo/${spring.application.name}_${server.port}
   config: classpath:logback-spring.xml
   level:
     com:

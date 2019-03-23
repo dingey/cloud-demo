@@ -24,4 +24,6 @@ public class User extends BaseEntity<User> {
     @ApiModelProperty("手机号")
     private String phone;
 
+    @ApiModelProperty("")
+    private String openid;
 }

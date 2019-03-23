@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Configuration;
 @EnableAutoConfiguration
 @EnableAdminServer
 @EnableEurekaClient
-public class AdminApplication {
+public class MonitorApplication {
     public static void main(String[] args) {
-        SpringApplication.run(AdminApplication.class, args);
+        SpringApplication.run(MonitorApplication.class, args);
     }
 }

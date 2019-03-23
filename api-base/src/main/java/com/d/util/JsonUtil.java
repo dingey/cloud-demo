@@ -38,6 +38,10 @@ public class JsonUtil {
         }
     }
 
+    public static <T> String toJsonString(T t) {
+        return single().toJson(t);
+    }
+
     @SuppressWarnings("unchecked")
     public <T> List<T> fromJsonToList(String json, Class<T> valueType) {
         return fromJsonWrapper(json, ArrayList.class, valueType);

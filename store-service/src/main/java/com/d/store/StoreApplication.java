@@ -14,7 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @EnableAdminServer
 @EnableDiscoveryClient
-@EnableFeignClients
+@EnableFeignClients(basePackages = "com.d.client")
 @EnableEurekaClient
 @MapperScan("com.d.store.mapper")
 @SpringBootApplication

@@ -1,9 +1,9 @@
 server:
   port: 8080
 
-host: localhost:${server.port}
-
 spring:
+  application:
+    name: api-gateway
   profiles:
     active: dev
   security:
@@ -27,6 +27,11 @@ spring:
           # http://localhost:6601/user/user/users/2, 必须加上StripPrefix=1，否则访问服务时会带上userapi
           #而不是我们期望的去掉userapi，只保留**部分
           filters:
+          - name: RequestRateLimiter
+            args:
+              redis-rate-limiter.replenishRate: 1  # 令牌桶的容积
+              redis-rate-limiter.burstCapacity: 3  # 流速 每秒
+              key-resolver: "#{@remoteAddrKeyResolver}" #SPEL表达式去的对应的bean
           - StripPrefix=1
         - id:  user-api2
           uri: lb://user-service
@@ -35,7 +40,10 @@ spring:
           #访问 http://localhost:8080/user-api2/member/2 转发到 lb://member-service/member/2
           filters:
           - StripPrefix=1
-
+  redis:
+    host: ${r_host:127.0.0.1}
+    password: ${r_password:123456}
+    port: 6379
 eureka:
    client:
       serviceUrl:
@@ -43,16 +51,19 @@ eureka:
 feign:
   hystrix:
     enabled: true
-
-zuul:
-  ignoredServices: '*'
-  host:
-    connect-timeout-millis: 20000
-    socket-timeout-millis: 20000
-
-  routes:
-    member-service:
-        path: /user/**
-        serviceId: user-service
-        stripPrefix: false
-        sensitiveHeaders:
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+  health:
+    elasticsearch:
+      enabled: false
+    redis:
+      enabled: false
+logging:
+  path: /logs/cloud-demo/${spring.application.name}_${server.port}
+  config: classpath:logback-spring.xml

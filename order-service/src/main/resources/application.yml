@@ -1,5 +1,5 @@
 server:
-   port: 8762
+   port: 8772
    host: localhost
 spring:
    profiles:
@@ -38,7 +38,7 @@ spring:
       virtual-host: /
    redis:
      host: ${r_host:127.0.0.1}
-     password: ${r_password:123456}
+     password: ${r_password:r123abc}
      port: 6379
 eureka:
   instance:
@@ -58,9 +58,12 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+  health:
+    elasticsearch:
+      enabled: false         
 #logback
 logging:
-  path: /logs/ptq-cloud/${spring.application.name}_${server.port}
+  path: /logs/cloud-demo/${spring.application.name}_${server.port}
   config: classpath:logback-spring.xml
   level:
     com:

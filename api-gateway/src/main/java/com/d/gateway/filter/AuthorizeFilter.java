@@ -31,7 +31,7 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
-        if (request.getPath().subPath(2).value().startsWith("/open")) {
+        if (request.getPath().subPath(2).value().startsWith("/open")||!request.getPath().subPath(2).value().startsWith("/auth")) {
             return chain.filter(exchange);
         }
         HttpHeaders headers = request.getHeaders();

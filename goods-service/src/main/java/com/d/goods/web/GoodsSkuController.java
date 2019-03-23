@@ -24,11 +24,11 @@ public class GoodsSkuController {
 
     @PostMapping(path = "/goodsSku/reduce")
     public Long reduce(Long id, Integer qty) {
-        return goodsSkuService.reduceInventory(id, qty);
+        return goodsSkuService.reduceInventory(id, qty,0L);
     }
 
     @PostMapping(path = "/goodsSku/increase")
     public Long increase(Long id, Integer qty) {
-        return goodsSkuService.increaseInventory(id, qty);
+        return goodsSkuService.increaseInventory(id, qty,0L);
     }
 }
