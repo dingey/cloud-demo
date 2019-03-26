@@ -22,13 +22,4 @@ public class UserApplication {
     public static void main(String[] args) {
         SpringApplication.run(UserApplication.class, args);
     }
-
-    @Profile("dev")
-    @Configuration
-    public static class SecurityPermitAllConfig extends WebSecurityConfigurerAdapter {
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests().anyRequest().permitAll().and().csrf().disable();
-        }
-    }
 }

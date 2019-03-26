@@ -1,0 +1,39 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: gateway-zuul
+  boot:
+    admin:
+      context-path: /monitor
+  security:
+    basic:
+      enabled: true
+    user:
+      name: admin
+      password: admin
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+    prefer-ip-address: true
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+  client:
+    registryFetchIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.host:localhost}:8761/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+zuul:
+  routes:
+    user:
+      path: /user/**
+      serviceId: user-service
