@@ -22,6 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         successHandler.setDefaultTargetUrl(adminContextPath + "/monitor");
 
         http.authorizeRequests()
+                .antMatchers("/v2/**").permitAll()
                 .antMatchers(adminContextPath + "/assets/**").permitAll()
                 .antMatchers(adminContextPath + "/login").permitAll()
                 .antMatchers(adminContextPath + "/monitor").authenticated()
