@@ -60,5 +60,9 @@
             <artifactId>spring-data-elasticsearch</artifactId>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.dingey</groupId>
+            <artifactId>mybatis-mapper</artifactId>
+        </dependency>
     </dependencies>
 </project>

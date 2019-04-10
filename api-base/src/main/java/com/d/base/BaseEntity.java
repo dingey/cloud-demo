@@ -1,10 +1,11 @@
 package com.d.base;
 
-import com.d.base.SqlProvider.Id;
-import com.d.base.SqlProvider.Transient;
+import com.github.dingey.mybatis.mapper.OrderBy;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -17,7 +18,8 @@ public class BaseEntity<T> implements Serializable {
     private Long id;
     @Transient
     private Boolean newRecord;
-    @SqlProvider.OrderBy
+    @OrderBy
+    @Transient
     private String orderBy = "id desc";
 
     public Long getId() {

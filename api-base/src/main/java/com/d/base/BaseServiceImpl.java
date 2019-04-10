@@ -91,11 +91,4 @@ public abstract class BaseServiceImpl<D extends BaseMapper<T>, T extends BaseEnt
         }
         return entityClass;
     }
-
-    private Field getEntityId() {
-        if (entityId == null) {
-            entityId = SqlProvider.id(getEntityClass());
-        }
-        return entityId;
-    }
 }
